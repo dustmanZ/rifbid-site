@@ -508,6 +508,55 @@ svg,img{display:block}
 }
 @keyframes ins-spin{to{transform:rotate(360deg)}}
 
+/* ─── Post article page ──────────────────────────────────── */
+.post-wrap{max-width:740px;margin:0 auto;padding:0 var(--gutter)}
+.post-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:500;color:var(--text-2);
+  border:1px solid var(--rule-2);border-radius:7px;
+  padding:7px 14px;transition:all 150ms;cursor:pointer;background:transparent
+}
+.post-back:hover{background:var(--bg-2);color:var(--text)}
+.post-hero-img{
+  width:100%;height:420px;border-radius:12px;
+  background-size:cover;background-position:center;
+  margin:40px 0 48px
+}
+.post-title{
+  font-size:clamp(30px,5vw,48px);font-weight:500;
+  letter-spacing:-0.03em;line-height:1.1;
+  margin:20px 0 14px
+}
+.post-meta{
+  font-family:var(--font-mono);font-size:11.5px;
+  color:var(--text-3);letter-spacing:0.05em;
+  padding-bottom:32px;border-bottom:1px solid var(--rule);margin-bottom:44px
+}
+.post-body h2{font-size:26px;font-weight:500;letter-spacing:-0.02em;margin:44px 0 14px;color:var(--text)}
+.post-body h3{font-size:20px;font-weight:500;letter-spacing:-0.01em;margin:36px 0 12px;color:var(--text)}
+.post-body h4{font-size:17px;font-weight:600;margin:28px 0 10px;color:var(--text)}
+.post-body p{font-size:17px;line-height:1.8;color:var(--text-2);margin-bottom:22px;max-width:none}
+.post-body ul,.post-body ol{margin:0 0 22px 24px}
+.post-body li{font-size:17px;line-height:1.8;color:var(--text-2);margin-bottom:8px}
+.post-body blockquote{
+  border-left:3px solid var(--blue);padding-left:22px;
+  margin:32px 0;font-size:18px;line-height:1.7;
+  color:var(--text-2);font-style:italic
+}
+.post-body figure{margin:36px 0}
+.post-body figure img{width:100%;border-radius:8px;display:block}
+.post-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.post-body strong{font-weight:600;color:var(--text)}
+.post-body code{
+  font-family:var(--font-mono);font-size:13px;
+  background:var(--bg-2);padding:2px 6px;border-radius:4px
+}
+.post-body pre{
+  background:var(--bg-2);border:1px solid var(--rule);border-radius:8px;
+  padding:20px 24px;overflow-x:auto;margin-bottom:22px
+}
+.post-body pre code{background:none;padding:0}
+
 /* ─── Card ───────────────────────────────────────────────── */
 .card{background:var(--bg);border:1px solid var(--rule);border-radius:var(--radius)}
 
@@ -1466,6 +1515,34 @@ svg,img{display:block}
   </section>
 </div>
 
+<!-- ─── PAGE: POST ────────────────────────────────── -->
+<div id="page-post" class="page">
+  <section style="padding:48px 0 0;border-bottom:1px solid var(--rule)">
+    <div class="post-wrap">
+      <button class="post-back" onclick="navigate('insights')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Insights
+      </button>
+      <div id="post-header"></div>
+    </div>
+  </section>
+  <section style="padding:48px 0 100px">
+    <div class="post-wrap">
+      <!-- Loading -->
+      <div id="post-loading" style="display:none;padding:80px 0;text-align:center">
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:0.1em">Loading post…</div>
+        <div class="ins-loader"></div>
+      </div>
+      <!-- Error -->
+      <div id="post-error" style="display:none;padding:48px;text-align:center;border:1px dashed var(--rule-2);border-radius:12px">
+        <p style="font-size:15px;color:var(--text-2);margin:0">Could not load this post. Please try again.</p>
+      </div>
+      <!-- Body -->
+      <div id="post-body" class="post-body"></div>
+    </div>
+  </section>
+</div>
+
 <!-- ─── PAGE: CAREERS ─────────────────────────────── -->
 <div id="page-careers" class="page">
 
@@ -2051,7 +2128,7 @@ function renderFeatured(post, grad) {
     ? `background-image:url('${post.imageUrl}');background-size:cover;background-position:center`
     : '';
   return `
-  <a class="ins-featured reveal in" href="${postUrl(post.slug)}" target="_blank" rel="noopener">
+  <div class="ins-featured reveal in" onclick="navigateToPost('${post.slug}')" style="cursor:pointer">
     <div class="ins-featured-img ${post.imageUrl ? '' : grad}" style="${imgStyle}"></div>
     <div class="ins-featured-body">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -2061,7 +2138,7 @@ function renderFeatured(post, grad) {
       <h2 style="font-size:28px;font-weight:500;letter-spacing:-0.02em;line-height:1.3;margin-bottom:12px">${post.title}</h2>
       <span class="ins-read-link">Read article →</span>
     </div>
-  </a>`;
+  </div>`;
 }
 
 function renderCard(post, grad, delay) {
@@ -2069,8 +2146,8 @@ function renderCard(post, grad, delay) {
     ? `background-image:url('${post.imageUrl}');background-size:cover;background-position:center`
     : '';
   return `
-  <a class="ins-card reveal in" href="${postUrl(post.slug)}" target="_blank" rel="noopener"
-     style="transition-delay:${delay}ms">
+  <div class="ins-card reveal in" onclick="navigateToPost('${post.slug}')"
+       style="transition-delay:${delay}ms;cursor:pointer">
     <div class="ins-card-img ${post.imageUrl ? '' : grad}" style="${imgStyle}"></div>
     <div class="ins-card-body">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -2079,7 +2156,7 @@ function renderCard(post, grad, delay) {
       </div>
       <h3 class="ins-title">${post.title}</h3>
     </div>
-  </a>`;
+  </div>`;
 }
 
 function renderInsightsPosts(result) {
@@ -2148,6 +2225,132 @@ function insightsLoadMore() {
   if (insightsShown >= insightsAllPosts.length) {
     document.getElementById('insights-more-wrap').style.display = 'none';
   }
+}
+
+/* ─── Post detail page ──────────────────────────── */
+let _postCache = {};  // slug → fetched post object
+
+function navigateToPost(slug) {
+  navigate('post');
+  const header  = document.getElementById('post-header');
+  const body    = document.getElementById('post-body');
+  const loading = document.getElementById('post-loading');
+  const err     = document.getElementById('post-error');
+
+  header.innerHTML = '';
+  body.innerHTML   = '';
+  err.style.display = 'none';
+
+  // Return from memory cache if already fetched
+  if (_postCache[slug]) {
+    renderPost(_postCache[slug]);
+    return;
+  }
+
+  loading.style.display = 'block';
+
+  const q = `*[_type=="post" && slug.current=="${slug}"][0]{title,publishedAt,"slug":slug.current,"imageUrl":mainImage.asset->url,body[]{...,_type=="image"=>{...,"assetUrl":asset->url}}}`;
+  fetch(sanityUrl(q))
+    .then(function(r){ return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
+    .then(function(json) {
+      loading.style.display = 'none';
+      if (!json.result) { err.style.display = 'block'; return; }
+      _postCache[slug] = json.result;
+      renderPost(json.result);
+    })
+    .catch(function() {
+      loading.style.display = 'none';
+      err.style.display = 'block';
+    });
+}
+
+function renderPost(post) {
+  const header = document.getElementById('post-header');
+  const body   = document.getElementById('post-body');
+
+  const imgHtml = post.imageUrl
+    ? `<div class="post-hero-img" style="background-image:url('${post.imageUrl}')"></div>`
+    : '<div style="height:24px"></div>';
+
+  header.innerHTML = `
+    <div class="ins-cat-badge" style="margin-top:24px;display:inline-block">Insights</div>
+    <h1 class="post-title">${post.title}</h1>
+    <div class="post-meta">${fmtDate(post.publishedAt)}</div>
+    ${imgHtml}`;
+
+  body.innerHTML = renderPortableText(post.body);
+}
+
+/* Portable Text → HTML renderer */
+function renderPortableText(blocks) {
+  if (!blocks || !blocks.length) return '<p style="color:var(--text-3)">No content available.</p>';
+
+  // Group consecutive list items into <ul> / <ol>
+  const grouped = [];
+  let listBuf = [], listType = null;
+  blocks.forEach(function(block) {
+    if (block._type === 'block' && block.listItem) {
+      if (block.listItem !== listType && listBuf.length) {
+        grouped.push({ _type: '__list', listType: listType, items: listBuf });
+        listBuf = [];
+      }
+      listType = block.listItem;
+      listBuf.push(block);
+    } else {
+      if (listBuf.length) {
+        grouped.push({ _type: '__list', listType: listType, items: listBuf });
+        listBuf = []; listType = null;
+      }
+      grouped.push(block);
+    }
+  });
+  if (listBuf.length) grouped.push({ _type: '__list', listType: listType, items: listBuf });
+
+  return grouped.map(function(block) {
+    if (block._type === '__list') {
+      const tag = block.listType === 'number' ? 'ol' : 'ul';
+      return `<${tag}>${block.items.map(function(item){ return `<li>${ptChildren(item)}</li>`; }).join('')}</${tag}>`;
+    }
+    if (block._type === 'block') {
+      const text = ptChildren(block);
+      const s = block.style || 'normal';
+      if (!text.trim()) return '';
+      if (s === 'h1') return `<h2>${text}</h2>`;   // downgrade h1 inside article
+      if (s === 'h2') return `<h2>${text}</h2>`;
+      if (s === 'h3') return `<h3>${text}</h3>`;
+      if (s === 'h4') return `<h4>${text}</h4>`;
+      if (s === 'blockquote') return `<blockquote>${text}</blockquote>`;
+      return `<p>${text}</p>`;
+    }
+    if (block._type === 'image') {
+      const url = block.assetUrl || (block.asset && block.asset.url);
+      if (url) return `<figure><img src="${url}" alt="" loading="lazy"/></figure>`;
+    }
+    return '';
+  }).join('');
+}
+
+function ptChildren(block) {
+  if (!block.children) return '';
+  return block.children.map(function(span) {
+    if (span._type !== 'span') return '';
+    let t = (span.text || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>');
+    if (span.marks && span.marks.length) {
+      span.marks.forEach(function(mark) {
+        if      (mark === 'strong')    t = `<strong>${t}</strong>`;
+        else if (mark === 'em')        t = `<em>${t}</em>`;
+        else if (mark === 'code')      t = `<code>${t}</code>`;
+        else if (mark === 'underline') t = `<u>${t}</u>`;
+        else {
+          const def = block.markDefs && block.markDefs.find(function(d){ return d._key === mark; });
+          if (def && def._type === 'link') t = `<a href="${def.href}" target="_blank" rel="noopener">${t}</a>`;
+        }
+      });
+    }
+    return t;
+  }).join('');
 }
 
 /* ─── Insights filter ───────────────────────────── */
