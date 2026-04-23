@@ -787,11 +787,11 @@ svg,img{display:block}
       <div>
         <h1 class="reveal">Continuous verification for the assets you finance.</h1>
         <div class="hero-actions reveal reveal-d1">
-          <button class="btn btn-pri" onclick="scrollTo('#lenders')">
+          <button class="btn btn-pri" onclick="scrollToHash('#lenders')">
             For Lenders
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <button class="btn btn-ghost" onclick="scrollTo('#architecture')">See the architecture</button>
+          <button class="btn btn-ghost" onclick="scrollToHash('#architecture')">See the architecture</button>
         </div>
       </div>
       <div class="hero-diagram reveal reveal-d2">
@@ -2231,7 +2231,7 @@ document.addEventListener('click', e => {
   }
 });
 
-function scrollTo(hash){
+function scrollToHash(hash){
   const el = document.querySelector(hash);
   if(el) el.scrollIntoView({behavior:'smooth'});
 }
