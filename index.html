@@ -1450,7 +1450,7 @@ svg,img{display:block}
   <section class="section">
     <div class="container">
       <!-- Loading state -->
-      <div id="insights-loading" style="padding:80px 0;text-align:center">
+      <div id="insights-loading" style="display:none;padding:80px 0;text-align:center">
         <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:0.1em">Fetching posts from Sanity…</div>
         <div class="ins-loader"></div>
       </div>
@@ -2506,6 +2506,32 @@ function toggleFaq(btn) {
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
+
+/* ─── Background prefetch: warm the Sanity cache on page load ─── */
+// Fires silently 1.5 s after load so the first Insights visit is instant.
+setTimeout(function prefetchInsights() {
+  if (insightsLoaded) return;          // already rendered (user navigated fast)
+  const cached = getInsightsCache();
+  if (cached && cached.length) return; // cache is fresh — nothing to do
+  const q = `*[_type=="post"] | order(publishedAt desc) {title,"slug":slug.current,publishedAt,"imageUrl":mainImage.asset->url}`;
+  fetch(sanityUrl(q))
+    .then(function(r){ return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
+    .then(function(json){
+      const result = json.result;
+      if (result && result.length) {
+        setInsightsCache(result);
+        // If the user is already on the Insights page, render immediately
+        if (!insightsLoaded) {
+          const loading = document.getElementById('insights-loading');
+          if (loading && loading.closest('#page-insights') &&
+              document.getElementById('page-insights').classList.contains('active')) {
+            renderInsightsPosts(result);
+          }
+        }
+      }
+    })
+    .catch(function(){});  // silently ignore — loadInsights() will retry on demand
+}, 1500);
 </script>
 </body>
 </html>
