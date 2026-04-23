@@ -508,54 +508,104 @@ svg,img{display:block}
 }
 @keyframes ins-spin{to{transform:rotate(360deg)}}
 
-/* ─── Post article page ──────────────────────────────────── */
-.post-wrap{max-width:740px;margin:0 auto;padding:0 var(--gutter)}
-.post-back{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:13px;font-weight:500;color:var(--text-2);
-  border:1px solid var(--rule-2);border-radius:7px;
-  padding:7px 14px;transition:all 150ms;cursor:pointer;background:transparent
+/* ─── Post article page — Option A (Editorial) ──────────────── */
+.post-progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--gradient);width:0%;z-index:999;
+  transition:width 80ms linear;pointer-events:none
 }
-.post-back:hover{background:var(--bg-2);color:var(--text)}
+.post-hero{
+  position:relative;height:540px;overflow:hidden;
+  display:flex;align-items:flex-end
+}
 .post-hero-img{
-  width:100%;height:420px;border-radius:12px;
-  background-size:cover;background-position:center;
-  margin:40px 0 48px
+  position:absolute;inset:0;
+  background-size:cover;background-position:center
+}
+.post-hero-no-img{
+  position:absolute;inset:0;
+  background:var(--bg-dark)
+}
+.post-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.28) 55%,transparent 100%)
+}
+.post-hero-text{
+  position:relative;z-index:2;
+  max-width:860px;padding:0 48px 56px
+}
+.post-back{
+  position:absolute;top:28px;left:40px;z-index:10;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.2);border-radius:7px;
+  padding:7px 14px;background:rgba(0,0,0,0.25);
+  backdrop-filter:blur(8px);cursor:pointer;
+  transition:all 150ms;font-family:var(--font-body)
+}
+.post-back:hover{color:#fff;border-color:rgba(255,255,255,0.5)}
+.post-cat{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:14px
 }
 .post-title{
-  font-size:clamp(30px,5vw,48px);font-weight:500;
-  letter-spacing:-0.03em;line-height:1.1;
-  margin:20px 0 14px
+  font-size:clamp(30px,4.5vw,54px);font-weight:500;
+  letter-spacing:-0.03em;line-height:1.08;
+  color:#fff;margin-bottom:16px
 }
 .post-meta{
   font-family:var(--font-mono);font-size:11.5px;
-  color:var(--text-3);letter-spacing:0.05em;
-  padding-bottom:32px;border-bottom:1px solid var(--rule);margin-bottom:44px
+  color:rgba(255,255,255,0.4)
 }
-.post-body h2{font-size:26px;font-weight:500;letter-spacing:-0.02em;margin:44px 0 14px;color:var(--text)}
-.post-body h3{font-size:20px;font-weight:500;letter-spacing:-0.01em;margin:36px 0 12px;color:var(--text)}
+/* Article body column */
+.post-body-outer{max-width:none;background:#fff}
+.post-body{max-width:740px;margin:0 auto;padding:68px 40px 120px}
+.post-body>p:first-child::first-letter{
+  font-size:4.2em;font-weight:600;float:left;
+  line-height:0.78;margin:6px 10px 0 0;
+  background:var(--gradient);-webkit-background-clip:text;
+  background-clip:text;color:transparent
+}
+.post-body p{font-size:18px;line-height:1.85;color:var(--text-2);margin-bottom:26px;max-width:none}
+.post-body h2{font-size:28px;font-weight:500;letter-spacing:-0.025em;margin:52px 0 16px;color:var(--text)}
+.post-body h3{font-size:21px;font-weight:500;margin:40px 0 12px;color:var(--text)}
 .post-body h4{font-size:17px;font-weight:600;margin:28px 0 10px;color:var(--text)}
-.post-body p{font-size:17px;line-height:1.8;color:var(--text-2);margin-bottom:22px;max-width:none}
-.post-body ul,.post-body ol{margin:0 0 22px 24px}
-.post-body li{font-size:17px;line-height:1.8;color:var(--text-2);margin-bottom:8px}
 .post-body blockquote{
-  border-left:3px solid var(--blue);padding-left:22px;
-  margin:32px 0;font-size:18px;line-height:1.7;
-  color:var(--text-2);font-style:italic
+  position:relative;margin:52px -80px;
+  padding:36px 48px 36px 60px;
+  background:var(--bg-2);border-radius:12px;border:none;
+  font-size:21px;line-height:1.55;font-style:italic;
+  color:var(--text);font-weight:300
 }
-.post-body figure{margin:36px 0}
-.post-body figure img{width:100%;border-radius:8px;display:block}
+.post-body blockquote::before{
+  content:'"';position:absolute;top:12px;left:16px;
+  font-size:80px;line-height:1;color:var(--blue);
+  opacity:0.3;font-family:Georgia,serif
+}
+.post-body figure{margin:44px -80px}
+.post-body figure img{width:100%;border-radius:10px;display:block}
+.post-body ul,.post-body ol{margin:0 0 26px 26px}
+.post-body li{font-size:18px;line-height:1.8;color:var(--text-2);margin-bottom:10px}
 .post-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 .post-body strong{font-weight:600;color:var(--text)}
+.post-body em{font-style:italic}
 .post-body code{
-  font-family:var(--font-mono);font-size:13px;
-  background:var(--bg-2);padding:2px 6px;border-radius:4px
+  font-family:var(--font-mono);font-size:13.5px;
+  background:var(--bg-2);padding:2px 7px;border-radius:4px
 }
 .post-body pre{
   background:var(--bg-2);border:1px solid var(--rule);border-radius:8px;
-  padding:20px 24px;overflow-x:auto;margin-bottom:22px
+  padding:20px 24px;overflow-x:auto;margin-bottom:26px
 }
 .post-body pre code{background:none;padding:0}
+/* Mobile: pull-outs can't bleed on small screens */
+@media(max-width:900px){
+  .post-body blockquote{margin:36px 0}
+  .post-body figure{margin:36px 0}
+  .post-back{left:16px;top:16px}
+  .post-hero-text{padding:0 20px 40px}
+  .post-body{padding:48px 20px 80px}
+}
 
 /* ─── Card ───────────────────────────────────────────────── */
 .card{background:var(--bg);border:1px solid var(--rule);border-radius:var(--radius)}
@@ -1517,30 +1567,24 @@ svg,img{display:block}
 
 <!-- ─── PAGE: POST ────────────────────────────────── -->
 <div id="page-post" class="page">
-  <section style="padding:48px 0 0;border-bottom:1px solid var(--rule)">
-    <div class="post-wrap">
-      <button class="post-back" onclick="navigate('insights')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Back to Insights
-      </button>
-      <div id="post-header"></div>
+  <!-- Reading progress bar -->
+  <div id="post-progress" class="post-progress"></div>
+  <!-- Hero: injected by renderPost() -->
+  <div id="post-header"></div>
+  <!-- Body section -->
+  <div class="post-body-outer">
+    <!-- Loading -->
+    <div id="post-loading" style="display:none;padding:80px 0;text-align:center">
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:0.1em">Loading post…</div>
+      <div class="ins-loader"></div>
     </div>
-  </section>
-  <section style="padding:48px 0 100px">
-    <div class="post-wrap">
-      <!-- Loading -->
-      <div id="post-loading" style="display:none;padding:80px 0;text-align:center">
-        <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:0.1em">Loading post…</div>
-        <div class="ins-loader"></div>
-      </div>
-      <!-- Error -->
-      <div id="post-error" style="display:none;padding:48px;text-align:center;border:1px dashed var(--rule-2);border-radius:12px">
-        <p style="font-size:15px;color:var(--text-2);margin:0">Could not load this post. Please try again.</p>
-      </div>
-      <!-- Body -->
-      <div id="post-body" class="post-body"></div>
+    <!-- Error -->
+    <div id="post-error" style="display:none;max-width:740px;margin:0 auto;padding:48px 40px;text-align:center;border:1px dashed var(--rule-2);border-radius:12px">
+      <p style="font-size:15px;color:var(--text-2);margin:0">Could not load this post. Please try again.</p>
     </div>
-  </section>
+    <!-- Body -->
+    <div id="post-body" class="post-body"></div>
+  </div>
 </div>
 
 <!-- ─── PAGE: CAREERS ─────────────────────────────── -->
@@ -2268,17 +2312,38 @@ function renderPost(post) {
   const header = document.getElementById('post-header');
   const body   = document.getElementById('post-body');
 
-  const imgHtml = post.imageUrl
+  // Hero — full bleed if image exists, dark fallback if not
+  const heroBg = post.imageUrl
     ? `<div class="post-hero-img" style="background-image:url('${post.imageUrl}')"></div>`
-    : '<div style="height:24px"></div>';
+    : `<div class="post-hero-no-img"></div>`;
 
   header.innerHTML = `
-    <div class="ins-cat-badge" style="margin-top:24px;display:inline-block">Insights</div>
-    <h1 class="post-title">${post.title}</h1>
-    <div class="post-meta">${fmtDate(post.publishedAt)}</div>
-    ${imgHtml}`;
+    <div class="post-hero">
+      ${heroBg}
+      <div class="post-hero-overlay"></div>
+      <button class="post-back" onclick="navigate('insights')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Insights
+      </button>
+      <div class="post-hero-text">
+        <div class="post-cat">● Insights</div>
+        <h1 class="post-title">${post.title}</h1>
+        <div class="post-meta">${fmtDate(post.publishedAt)}</div>
+      </div>
+    </div>`;
 
   body.innerHTML = renderPortableText(post.body);
+
+  // Wire up reading-progress bar
+  const bar = document.getElementById('post-progress');
+  function updateProgress() {
+    const total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? (window.scrollY / total * 100) + '%' : '0%';
+  }
+  window._postScrollHandler && window.removeEventListener('scroll', window._postScrollHandler);
+  window._postScrollHandler = updateProgress;
+  window.addEventListener('scroll', updateProgress);
+  bar.style.width = '0%';
 }
 
 /* Portable Text → HTML renderer */
