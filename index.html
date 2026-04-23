@@ -1964,21 +1964,28 @@ svg,img{display:block}
           </div>
         </div>
         <div class="reveal">
-          <form class="card" style="padding:36px" onsubmit="this.innerHTML='<div style=\'text-align:center;padding:32px\'><div style=\'font-size:28px;font-weight:500;margin-bottom:10px\'>Received.</div><p style=\'color:var(--text-2)\'>The right person at Rifbid will reach out within two business days.</p></div>';return false">
+          <form id="contact-form" class="card" style="padding:36px" onsubmit="submitContactForm(event)">
             <div class="eyebrow" style="margin-bottom:20px">Request Access</div>
-            <div style="display:grid;gap:16px">
-              <div class="field"><label>I am a…</label><select><option>Lender / financier</option><option>Institutional investor</option><option>Government supplier</option><option>Strategic partner</option><option>Government / development institution</option></select></div>
+            <div id="contact-fields" style="display:grid;gap:16px">
+              <div class="field"><label>I am a…</label><select id="cf-role"><option>Lender / financier</option><option>Institutional investor</option><option>Government supplier</option><option>Strategic partner</option><option>Government / development institution</option></select></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                <div class="field"><label>Name</label><input type="text" placeholder="Jane Doe" required/></div>
-                <div class="field"><label>Work email</label><input type="email" placeholder="jane@institution.com" required/></div>
+                <div class="field"><label>Name</label><input id="cf-name" type="text" placeholder="Jane Doe" required/></div>
+                <div class="field"><label>Work email</label><input id="cf-email" type="email" placeholder="jane@institution.com" required/></div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                <div class="field"><label>Organization</label><input type="text" placeholder="Institution name" required/></div>
-                <div class="field"><label>Role</label><input type="text" placeholder="Head of Credit Risk"/></div>
+                <div class="field"><label>Organization</label><input id="cf-org" type="text" placeholder="Institution name" required/></div>
+                <div class="field"><label>Role / title</label><input id="cf-title" type="text" placeholder="Head of Credit Risk"/></div>
               </div>
-              <div class="field"><label>What are you exploring?</label><textarea placeholder="Tell us briefly what you're looking for."></textarea></div>
+              <div class="field"><label>What are you exploring?</label><textarea id="cf-message" placeholder="Tell us briefly what you're looking for."></textarea></div>
               <div class="field"><label class="hint">By submitting, you agree to be contacted by Rifbid. We do not share inbound requests.</label></div>
-              <button class="btn btn-pri" type="submit" style="justify-self:start;margin-top:4px">Submit <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button id="cf-submit" class="btn btn-pri" type="submit" style="justify-self:start;margin-top:4px">Submit <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </div>
+            <div id="contact-success" style="display:none;text-align:center;padding:32px">
+              <div style="font-size:28px;font-weight:500;margin-bottom:10px">Received.</div>
+              <p style="color:var(--text-2)">The right person at Rifbid will reach out within two business days.</p>
+            </div>
+            <div id="contact-error" style="display:none;padding:16px 0">
+              <p style="color:#e05c5c;margin:0">Something went wrong. Please email us directly at <a href="mailto:info@rifbid.com" style="color:inherit">info@rifbid.com</a>.</p>
             </div>
           </form>
         </div>
@@ -2354,6 +2361,52 @@ function renderInsightsPosts(result) {
   const moreWrap = document.getElementById('insights-more-wrap');
   if (insightsShown < result.length) moreWrap.style.display = 'block';
   insightsLoaded = true;
+}
+
+/* ── Contact form ─────────────────────────────────────── */
+// IMPORTANT: replace the URL below with your deployed Cloudflare Worker URL
+// e.g. https://rifbid-contact.YOUR_SUBDOMAIN.workers.dev
+const CONTACT_WORKER_URL = 'https://rifbid-contact.rifbid.workers.dev';
+
+async function submitContactForm(e) {
+  e.preventDefault();
+  const btn    = document.getElementById('cf-submit');
+  const errEl  = document.getElementById('contact-error');
+  const succEl = document.getElementById('contact-success');
+  const fields = document.getElementById('contact-fields');
+
+  errEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const payload = {
+    role:       document.getElementById('cf-role').value,
+    name:       document.getElementById('cf-name').value.trim(),
+    email:      document.getElementById('cf-email').value.trim(),
+    organization: document.getElementById('cf-org').value.trim(),
+    roleTitle:  document.getElementById('cf-title').value.trim(),
+    message:    document.getElementById('cf-message').value.trim(),
+  };
+
+  try {
+    const res  = await fetch(CONTACT_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      fields.style.display  = 'none';
+      succEl.style.display  = 'block';
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
+  } catch (err) {
+    console.error('Contact form error:', err);
+    btn.disabled    = false;
+    btn.innerHTML   = 'Submit <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    errEl.style.display = 'block';
+  }
 }
 
 function loadInsights() {
