@@ -780,7 +780,7 @@ svg,img{display:block}
     <div class="reveal" style="margin-bottom:40px">
       <span class="pill">
         <span class="pill-dot"></span>
-        Regional financial institutions already run on Rifbid
+        Financial institutions already run on Rifbid
       </span>
     </div>
     <div class="hero-grid">
@@ -845,7 +845,38 @@ svg,img{display:block}
         <div class="pillar-num">03</div>
         <h3>Programmability as the scaling layer</h3>
         <p>Once obligations are verifiable and settlement is controllable, the same assets can move across modern capital markets with more transparency, liquidity, and composability.</p>
-        <a href="#mission-full" class="pillar-link">Read the mission <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#" class="pillar-link" onclick="navigate('cva-agents');return false">Read the details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CVA DARK SECTION ───────────────────────────── -->
+<section class="cva-section" id="cva">
+  <div class="container">
+    <div class="cva-grid">
+      <div class="reveal">
+        <div class="eyebrow cva-eyebrow"><span class="dot">● </span>02 · Trust anchor</div>
+        <h2>CVA — an agentic second observer of reality.</h2>
+        <p>Static verification is a snapshot. CVA is a stream. Credentials, documents, and operational signals are checked continuously — not once at onboarding.</p>
+        <button class="btn-light" onclick="navigate('cva-agents')">
+          Inside CVA
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="reveal reveal-d1">
+        <div class="ticker">
+          <div class="ticker-head">
+            <div class="ticker-live">
+              <span class="ticker-live-dot"></span>
+              CVA · verification stream
+            </div>
+            <span>live · read-only</span>
+          </div>
+          <div class="ticker-body" id="ticker-body">
+            <!-- Lines injected by JS -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -855,7 +886,7 @@ svg,img{display:block}
 <section class="section" id="architecture" style="background:var(--bg-2)">
   <div class="container">
     <div class="section-head reveal">
-      <div class="eyebrow"><span class="eyebrow-dot">02 · </span>How it works</div>
+      <div class="eyebrow"><span class="eyebrow-dot">03 · </span>How it works</div>
       <h2>A closed loop, by design.</h2>
       <p class="lede">Three layers. Each is the prerequisite for the one below. Verified obligations flow through controlled settlement, funded by lenders today and by a broader institutional pool over time.</p>
     </div>
@@ -865,7 +896,7 @@ svg,img{display:block}
       <div class="arch-layer">
         <div>
           <div class="arch-idx">Layer 01</div>
-          <h3>Verification</h3>
+          <h3>Continuously Verified Assets</h3>
         </div>
         <div class="arch-desc">Credentials, contracts, disbursement triggers, and operational signals continuously verified by CVA.</div>
         <div class="chip-row">
@@ -893,7 +924,7 @@ svg,img{display:block}
           <div class="arch-idx">Layer 03</div>
           <h3>Capital</h3>
         </div>
-        <div class="arch-desc">Today: regional lenders originate against verified obligations. Over time: an institutional capital pool accesses the same asset class.</div>
+        <div class="arch-desc">Today: lenders originate against verified obligations. Over time: an institutional capital pool accesses the same asset class.</div>
         <div class="chip-row">
           <span class="chip">Regional lenders</span>
           <span class="chip">Institutional pool</span>
@@ -904,42 +935,11 @@ svg,img{display:block}
   </div>
 </section>
 
-<!-- ─── CVA DARK SECTION ───────────────────────────── -->
-<section class="cva-section" id="cva">
-  <div class="container">
-    <div class="cva-grid">
-      <div class="reveal">
-        <div class="eyebrow cva-eyebrow"><span class="dot">● </span>02 · Trust anchor</div>
-        <h2>CVA — an agentic second observer of reality.</h2>
-        <p>Static verification is a snapshot. CVA is a stream. Credentials, documents, and operational signals are checked continuously — not once at onboarding.</p>
-        <button class="btn-light" onclick="scrollTo('#cva-detail')">
-          Inside CVA
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </div>
-      <div class="reveal reveal-d1">
-        <div class="ticker">
-          <div class="ticker-head">
-            <div class="ticker-live">
-              <span class="ticker-live-dot"></span>
-              CVA · verification stream
-            </div>
-            <span>live · read-only</span>
-          </div>
-          <div class="ticker-body" id="ticker-body">
-            <!-- Lines injected by JS -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ─── AUDIENCE CTAs ─────────────────────────────── -->
 <section class="section" style="background:var(--bg-2)" id="audiences">
   <div class="container">
     <div class="section-head reveal">
-      <div class="eyebrow"><span class="eyebrow-dot">03 · </span>Who it's for</div>
+      <div class="eyebrow"><span class="eyebrow-dot">04 · </span>Who it's for</div>
       <h2>One system. Four audiences.</h2>
       <p class="lede">Rifbid is institutional infrastructure. The surface each audience sees is different; the underlying rails are the same.</p>
     </div>
@@ -1735,47 +1735,6 @@ svg,img{display:block}
   </section>
 </div>
 
-<!-- ─── FOOTER ────────────────────────────────────── -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <img src="rifbid-logo.png" alt="Rifbid" style="height:28px;width:auto;margin-bottom:12px;display:block">
-        <div class="footer-tag">Financial infrastructure for government obligations.</div>
-      </div>
-      <div>
-        <h5>Product</h5>
-        <a href="#" onclick="navigate('cva-agents');return false">CVA Agents</a>
-        <a href="#" onclick="navigate('receivables');return false">Receivables Financing</a>
-        <a href="#" onclick="navigate('invest');return false">Rifbid Invest</a>
-      </div>
-      <div>
-        <h5>For</h5>
-        <a href="#" onclick="navigate('receivables');return false">Lenders &amp; Financiers</a>
-        <a href="#" onclick="navigate('receivables');return false">Government Suppliers</a>
-        <a href="#" onclick="navigate('invest');return false">Institutional Investors</a>
-        <a href="#" onclick="navigate('contact');return false">Strategic Partners</a>
-      </div>
-      <div>
-        <h5>Company</h5>
-        <a href="#" onclick="navigate('webinars');return false">Webinars</a>
-        <a href="#" onclick="navigate('insights');return false">Insights</a>
-        <a href="#" onclick="navigate('careers');return false">Careers</a>
-        <a href="#" onclick="navigate('contact');return false">Contact</a>
-      </div>
-      <div>
-        <h5>Legal</h5>
-        <a href="#" onclick="navigate('privacy');return false">Privacy</a>
-        <a href="#" onclick="navigate('terms');return false">Terms</a>
-        <a href="#" onclick="navigate('security');return false">Security</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>© 2026 Rifbid Technologies, Inc. All rights reserved.</div>
-    </div>
-  </div>
-</footer>
-
 <!-- ─── PAGE: PRIVACY ─────────────────────────────── -->
 <div id="page-privacy" class="page">
   <section style="padding:80px 0 64px;border-bottom:1px solid var(--rule)">
@@ -1854,6 +1813,46 @@ svg,img{display:block}
   </section>
 </div>
 
+<!-- ─── FOOTER ────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="rifbid-logo.png" alt="Rifbid" style="height:28px;width:auto;margin-bottom:12px;display:block">
+        <div class="footer-tag">Financial infrastructure for government obligations.</div>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <a href="#" onclick="navigate('cva-agents');return false">CVA Agents</a>
+        <a href="#" onclick="navigate('receivables');return false">Receivables Financing</a>
+        <a href="#" onclick="navigate('invest');return false">Rifbid Invest</a>
+      </div>
+      <div>
+        <h5>For</h5>
+        <a href="#" onclick="navigate('receivables');return false">Lenders &amp; Financiers</a>
+        <a href="#" onclick="navigate('receivables');return false">Government Suppliers</a>
+        <a href="#" onclick="navigate('invest');return false">Institutional Investors</a>
+        <a href="#" onclick="navigate('contact');return false">Strategic Partners</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="#" onclick="navigate('webinars');return false">Webinars</a>
+        <a href="#" onclick="navigate('insights');return false">Insights</a>
+        <a href="#" onclick="navigate('careers');return false">Careers</a>
+        <a href="#" onclick="navigate('contact');return false">Contact</a>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <a href="#" onclick="navigate('privacy');return false">Privacy</a>
+        <a href="#" onclick="navigate('terms');return false">Terms</a>
+        <a href="#" onclick="navigate('security');return false">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Rifbid Technologies, Inc. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
 
 <script>
 /* ─── Scroll-reveal ─────────────────────────────── */
@@ -2197,8 +2196,8 @@ function navigate(pageId) {
     target.classList.add('active');
     window.scrollTo({top:0,behavior:'instant'});
     if(pageId === 'insights') loadInsights();
-    if(pageId === 'cva-agents' && !_agentCanvas2Init) {
-      _agentCanvas2Init = true;
+    if(pageId === 'cva-agents') {
+      // always try — initAgentCanvas is idempotent (uses canvas._animating flag)
       setTimeout(() => initAgentCanvas('agent-canvas-2'), 80);
     }
     // re-run reveal on newly shown elements
@@ -2313,6 +2312,8 @@ function scrollTo(hash){
 function initAgentCanvas(canvasId) {
   const canvas = document.getElementById(canvasId);
   if(!canvas) return;
+  if(canvas._animating) return;   // already running — don't double-init
+  canvas._animating = true;
   const wrap = canvas.closest('.agent-canvas-wrap');
   if(!wrap) return;
   const dpr = window.devicePixelRatio || 1;
@@ -2342,6 +2343,7 @@ function initAgentCanvas(canvasId) {
   const logoImg = new Image();
   logoImg.src = 'rifbid-icon.png';
 
+  let drawStarted = false;
   function resize() {
     const W = wrap.clientWidth;
     const H = wrap.clientHeight;
@@ -2351,6 +2353,7 @@ function initAgentCanvas(canvasId) {
     canvas.style.width  = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!drawStarted) { drawStarted = true; draw(); }  // start loop on first valid size
   }
   resize();
   window.addEventListener('resize', resize);
@@ -2495,7 +2498,6 @@ function initAgentCanvas(canvasId) {
     ctx.textAlign = 'left';
     requestAnimationFrame(draw);
   }
-  draw();
 }
 let _agentCanvas2Init = false;
 
