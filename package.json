@@ -1,0 +1,9 @@
+{
+  "name": "rifbid-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.3"
+  }
+}

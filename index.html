@@ -2364,9 +2364,7 @@ function renderInsightsPosts(result) {
 }
 
 /* ── Contact form ─────────────────────────────────────── */
-// IMPORTANT: replace the URL below with your deployed Cloudflare Worker URL
-// e.g. https://rifbid-contact.YOUR_SUBDOMAIN.workers.dev
-const CONTACT_WORKER_URL = 'https://rifbid-contact.rifbid.workers.dev';
+const CONTACT_WORKER_URL = '/api/contact';
 
 async function submitContactForm(e) {
   e.preventDefault();
